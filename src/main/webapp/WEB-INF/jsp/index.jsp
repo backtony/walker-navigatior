@@ -183,7 +183,7 @@
               <button class="search-button btn btn-sm btn-outline-secondary" type="button" id="end-btn">검색</button>
             </li>
             <div class="p-3">
-                <button type="button" class="btn bg-indigo btn-block">
+                <button type="button" class="btn bg-indigo btn-block" id="search-route">
                     길찾기
                 </button>
             </div>

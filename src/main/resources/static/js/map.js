@@ -27,6 +27,9 @@ function setSearchbtn(){
         alert("검색어를 입력하세요");
     }
   })
+  $("#search-route").on("click", function(e){
+     searchRoutes(); 
+  });
 }
 
 // sidebar backdrop event
@@ -47,6 +50,8 @@ var marker_s, marker_e, marker_p1, marker_p2;
 var totalMarkerArr = [];
 var drawInfoArr = [];
 var resultdrawArr = [];
+
+var srcX, srcY, dstX, dstY;
 // keyword 통한 검색 -> response 로 목록 받아옴
 function searchAddress(keyword, target){
   $.ajax({
@@ -105,7 +110,15 @@ function chooseDestination(sectionEl){
         input$El = $(`input#${$(this).data('target')}`);
         $(input$El).val($(this).text().trim());
         $("section#destination-list").text('');
-
+        if ($(this).data('target') == 'start') {
+            srcX = $(this).data('x');
+            srcY = $(this).data('y');
+            console.log(srcX);
+            console.log(srcY);
+        } else {
+            dstX = $(this).data('x');
+            dstY = $(this).data('y');
+        }
     })
  
 }
@@ -296,4 +309,19 @@ function locationErr(error, app) {
       console.warn("UNKNOWN_ERR")
       break;
   }
+}
+
+function searchRoutes() {
+    fetchRoutes(srcX, srcY, dstX, dstY)
+    .then(candidates => {
+      for (var i = 0; i < candidates.length; i += 1) {
+        try {
+          if (candidates[i].routes) drawRoute(candidates[i].routes);
+          drawMark(candidates[i].cctvs, map, "cctv");
+          drawMark(candidates[i].lamps, map, "lamp");
+        } catch (err) {
+          console.log(err);
+        }
+      }
+    });
 }
