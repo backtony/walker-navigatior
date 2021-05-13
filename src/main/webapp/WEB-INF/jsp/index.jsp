@@ -18,6 +18,7 @@
 	<link href="${pageContext.request.contextPath}/static/css/components.min.css" rel="stylesheet" type="text/css">
 	<link href="${pageContext.request.contextPath}/static/css/colors.min.css" rel="stylesheet" type="text/css">
 	<!-- /global stylesheets -->
+	<link href="${pageContext.request.contextPath}/static/css/main.css" rel="stylesheet" type="text/css">
 
 	<!-- Core JS files -->
 	<script src="${pageContext.request.contextPath}/static/js/main/jquery.min.js"></script>
@@ -35,7 +36,7 @@
 	<script src="${pageContext.request.contextPath}/static/js/plugins/pickers/daterangepicker.js"></script>
 
 	<script src="${pageContext.request.contextPath}/static/js/app.js"></script>
-	<script src="${pageContext.request.contextPath}/static/js/demo_pages/dashboard.js"></script>
+
 	<!-- /theme JS files -->
 
 </head>
@@ -46,15 +47,15 @@
 	<div class="navbar navbar-expand-md navbar-dark bg-indigo navbar-static">
 		<div class="navbar-brand">
 			<a href="/" class="d-inline-block">
-        
+
 				<img src="${pageContext.request.contextPath}/static/images/logo_white.png" alt="">
-			</a>  
+			</a>
 		</div>
 
 		<div class="d-md-none">
 			<button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbar-mobile">
 				<i class="icon-tree5"></i>
-        
+
 			</button>
 			<button class="navbar-toggler sidebar-mobile-main-toggle" type="button">
 				<i class="icon-search4"></i>
@@ -96,7 +97,7 @@
 										<div class="font-size-sm font-weight-semibold text-uppercase mt-2">Dropbox</div>
 									</a>
 								</div>
-								
+
 								<div class="col-12 col-sm-4">
 									<a href="#" class="d-block text-default text-center ripple-dark rounded p-3">
 										<i class="icon-dribbble3 text-pink-400 icon-2x"></i>
@@ -130,7 +131,7 @@
 						<i class="icon-pulse2 mr-2"></i>
 						Activity
 					</a> -->
-				
+
 				</li>
 
 				<!-- <li class="nav-item">
@@ -167,36 +168,34 @@
 
 			<!-- Sidebar content -->
 			<div class="sidebar-content">
-        
+
 				<!-- Main navigation -->
 				<div class="card card-sidebar-mobile">
 
-				    
+
 
 					<ul class="nav nav-sidebar" data-nav-type="accordion">
-            <li class="nav-item px-3 my-3 input-group">
-              <input type="text" class="form-control" placeholder="출발지 검색">
-              <button class="btn btn-sm btn-outline-secondary" type="button" id="button-addon2">검색</button>
-            </li>
 
-            <li class="nav-item px-3 input-group">
-              <input type="text" class="form-control" placeholder="도착지 검색">
-              <button class="btn btn-sm btn-outline-secondary" type="button" id="button-addon2">검색</button>
-            </li>
-            
+            <form action="/#" method="POST">
+                <li class="nav-item px-3 my-3 input-group">
+                  <input type="text" class="form-control" id="start" placeholder="출발지 검색">
+                  <button class="search-button btn btn-sm btn-outline-secondary" id="start-btn" type="button">검색</button>
+                </li>
+
+                <li class="nav-item px-3 input-group">
+                  <input type="text" class="form-control" id="end" placeholder="도착지 검색">
+                  <button class="search-button btn btn-sm btn-outline-secondary" type="button" id="end-btn">검색</button>
+                </li>
+            </form>
               <!-- Main -->
               <li class="nav-item-header">
-                <div class="text-uppercase font-size-xs line-height-xs">목록</div> <i class="icon-menu" title="Main"></i>
+                <div class="text-uppercase font-size-xs line-height-xs">검색 목록</div>
+                <i class="icon-menu" title="Main"></i>
               </li>
-              
-              <li class="nav-item" id="destination-list">
-                <a href="#" class="nav-link active">
-                  <i class="icon-paragraph-justify3"></i>
-                  <span>
-                    검색 결과
-                  </span>
-                </a>
-              </li>
+
+              <section id="destination-list" onclick="chooseDestination(this)">
+              </section>
+
               
               
               <!-- /main -->
