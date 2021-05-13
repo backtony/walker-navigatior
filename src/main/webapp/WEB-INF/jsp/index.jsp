@@ -5,6 +5,7 @@
     <title>simpleMap</title>
     <script src="https://apis.openapi.sk.com/tmap/jsv2?version=1&appKey=${appKey}"></script>
     <script type="text/javascript">
+        console.log(`${accident}`)
         function initTmap(){
             var map = new Tmapv2.Map("map_div",
                     {
@@ -14,6 +15,7 @@
                         zoom: 15
                     });
         }
+
     </script>
 </head>
 <body onload="initTmap()">
