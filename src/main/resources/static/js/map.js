@@ -1,3 +1,46 @@
+function initTmap(position) {
+  var map = new Tmapv2.Map("map_div",
+    {
+      center: new Tmapv2.LatLng(position.coords.latitude, position.coords.longitude), // 지도 초기 좌표
+      width: "100vw",
+      height: "100vh",
+      zoom: 15
+    });
+
+    let lat = position.coords.latitude;
+    let lng = position.coords.longitude;
+    console.log(`current: ${lat}, ${lng}`);
+
+    // get current location name as start point
+    
+    // 
+}
+
+// search btn event
+function setSearchbtn(){
+  $(".search-button").on("click", function(e){
+    let input$El = $(e.target).siblings("input");
+    let keyword = input$El.val();
+    if(keyword.trim() != ''){
+        searchAddress(keyword, input$El.attr("id"));
+    } else {
+        alert("검색어를 입력하세요");
+    }
+  })
+}
+
+// sidebar backdrop event
+function backDrop(){
+    $(".content-wrapper").on("click", function(e){
+        if ($('body').hasClass('sidebar-mobile-main')) {
+            console.log("backdrop clicked")
+            e.preventDefault()
+            $('body').toggleClass('sidebar-mobile-main').removeClass('sidebar-mobile-secondary sidebar-mobile-right');
+            $('.sidebar-main').removeClass('sidebar-fullscreen');
+        }
+    })
+}
+// keyword 통한 목록 검색
 var currentPosition;
 var map;
 var marker_s, marker_e, marker_p1, marker_p2;
@@ -25,14 +68,14 @@ function searchAddress(keyword, target){
 
 // 주소 검색 통해서 얻어온 목록
 function drawAddressList(address, target){
-  $("section#destination-list").text('');
-  if (address.length > 0){
-    $.each(address, function(i, place){
-      let place_name = place["name"];
-      let x = place['x'];
-      let y = place['y'];
-      let listEl = `<li class="nav-item">
-              <a href="#" class="nav-link"  data-target="${target}" data-x="${x}" data-y="${y}">
+    $("section#destination-list").text('');
+    if (address.length > 0){
+        $.each(address, function(i, place){
+            let place_name = place["name"];
+            let x = place['x'];
+            let y = place['y'];
+            let listEl = `<li class="nav-item" data-target="${target}" data-x="${x}" data-y="${y}">
+              <a href="#" class="nav-link">
                 <i class="icon-location3"></i>
                 <span>
                   ${place_name}
@@ -55,25 +98,18 @@ function drawAddressList(address, target){
   }
 }
 
-// 주소 목록중 하나 선택
+// 주소 목록 중 하나 선택
 function chooseDestination(sectionEl){
-  $(sectionEl).on("click", "li", function(e){
+    $(sectionEl).on("click", "li.nav-item", function(e){
+        $(this).addClass("active");
+        input$El = $(`input#${$(this).data('target')}`);
+        $(input$El).val($(this).text().trim());
+        $("section#destination-list").text('');
 
-    input$El = $(`input#${$(e.target).data('target')}`);
-    $(input$El).val($(e.target).text().trim());
-    //        $(e.target).addClass("active");
-    $("section#destination-list").text('');
-
-
-  })
-  // set el && form 
-
+    })
+ 
 }
 
-// 길찾기 요청
-function requestNavigation(form){
-
-}
 
 
 function getLocation(callback) {
@@ -86,18 +122,9 @@ function getLocation(callback) {
 
 function load() {
   getLocation(initTmap);
-
-  $(".search-button").on("click", function(e){
-    let input$El = $(e.target).siblings("input");
-    let keyword = input$El.val();
-    if(keyword != ''){
-      searchAddress(keyword, input$El.attr("id"));
-    } else {
-      alert("검색어를 입력하세요");
-    }
-  })
-
+  setSearchbtn();
   chooseDestination("section#destination-list");
+  backDrop();
 }
 
 
