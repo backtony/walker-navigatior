@@ -12,6 +12,9 @@ import project.dao.AccidentDAO;
 import project.dao.CctvDAO;
 import project.dao.LampDAO;
 import project.routes.model.*;
+import project.routes.model.Candidate;
+import project.routes.model.PedestrianApiResponse;
+import project.util.PropertyUtil;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -31,7 +34,7 @@ public class RouteService {
     public PedestrianApiResponse getResponse(Double startX, Double startY, Double endX, Double endY, Double wayX,
                                              Double wayY) {
         HttpHeaders headers = new HttpHeaders();
-        headers.set("appKey", env.getProperty("tmap.appKey"));
+        headers.set("appKey", PropertyUtil.getProperty("tmap.appKey"));
 
         String url = "https://apis.openapi.sk.com/tmap/routes/pedestrian";
         MultiValueMap<String, String> map= new LinkedMultiValueMap<>();
