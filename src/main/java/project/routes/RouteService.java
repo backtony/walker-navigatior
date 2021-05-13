@@ -99,7 +99,7 @@ public class RouteService {
                 long elapsed = System.nanoTime() - startTime;
                 if (elapsed < 1000000) {
                     try {
-                        TimeUnit.MILLISECONDS.sleep(1000 - elapsed/1000000);
+                        TimeUnit.MILLISECONDS.sleep(5000 - elapsed/1000000);
                     } catch (Exception e) {
                         e.printStackTrace();
                     }

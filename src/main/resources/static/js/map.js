@@ -100,13 +100,6 @@ function load() {
   chooseDestination("section#destination-list");
 }
 
-function generateGPSMarker(position, map) {
-  var tmapMarker = new Tmapv2.Marker({
-    position: new Tmapv2.LatLng(position.coords.latitude, position.coords.longitude),
-    map: map,
-  });
-  return tmapMarker;
-}
 
 function initTmap(position) {
   currentPosition = position;
@@ -120,10 +113,34 @@ function initTmap(position) {
   let lat = position.coords.latitude;
   let lng = position.coords.longitude;
   console.log(`current: ${lat}, ${lng}`);
-
-  //var marker = generateGPSMarker(position, map);
 }
-
+/*
+position -> {latitude, longitude}
+ target -> "cctv" or "lamp"
+ */
+function drawMark(positions, map, target){
+    var markerList = []
+    /*  test code
+    var position = [{latitude : '37', longitude : '126'},
+        {latitude : '37.001', longitude : '126.001'}]
+     */
+    positions.forEach(function (latlng){
+        markerList.push(new Tmapv2.Marker({
+            position: new Tmapv2.LatLng(latlng.y, latlng.x),
+            map: map,
+            icon : "https://github.com/makerdark98/walker-navigator/blob/map_rendering/src/main/resources/img/"+target+".png?raw=true",
+            iconSize : new Tmapv2.Size(24,24)
+        }));
+    })
+    return markerList;
+};
+// latitude, longitude's ratio is different
+function latToMeter(diffInCoord){
+    return diffInCoord * 109958.489129649955
+}
+function lngToMeter(diffInCoord){
+    return diffInCoord * 88740
+}
 
 function getLocation(callback) {
   if (navigator.geolocation) {
@@ -144,7 +161,13 @@ function test() {
   fetchRoutes(currentPosition.coords.longitude, currentPosition.coords.latitude, 127.0587325, 37.49992264)
     .then(candidates => {
       for (var i = 0; i < candidates.length; i += 1) {
-        if (candidates[i].routes) drawRoute(candidates[i].routes);
+        try {
+          if (candidates[i].routes) drawRoute(candidates[i].routes);
+          drawMark(candidates[i].cctvs, map, "cctv");
+          drawMark(candidates[i].lamps, map, "lamp");
+        } catch (err) {
+          console.log(err);
+        }
       }
     });
 }
@@ -169,10 +192,6 @@ function drawLine(arrPoint) {
     map : map
   });
   resultdrawArr.push(polyline_);
-}
-
-function load() {
-  getLocation(initTmap);
 }
 
 
