@@ -16,6 +16,28 @@ function initTmap(position) {
     // 
 }
 
+function setSearchbtn(){
+  $(".search-button").on("click", function(e){
+    let input$El = $(e.target).siblings("input");
+    let keyword = input$El.val();
+    if(keyword.trim() != ''){
+        searchAddress(keyword, input$El.attr("id"));
+    } else {
+        alert("검색어를 입력하세요");
+    }
+  })
+}
+
+function backDrop(){
+    $(".content-wrapper").on("click", function(e){
+        if ($('body').hasClass('sidebar-mobile-main')) {
+            console.log("backdrop clicked")
+            e.preventDefault()
+            $('body').toggleClass('sidebar-mobile-main').removeClass('sidebar-mobile-secondary sidebar-mobile-right');
+            $('.sidebar-main').removeClass('sidebar-fullscreen');
+        }
+    })
+}
 // keyword 통한 검색 -> response 로 목록 받아옴
 function searchAddress(keyword, target){
     $.ajax({
@@ -43,8 +65,8 @@ function drawAddressList(address, target){
             let place_name = place["name"];
             let x = place['x'];
             let y = place['y'];
-            let listEl = `<li class="nav-item">
-              <a href="#" class="nav-link"  data-target="${target}" data-x="${x}" data-y="${y}">
+            let listEl = `<li class="nav-item" data-target="${target}" data-x="${x}" data-y="${y}">
+              <a href="#" class="nav-link">
                 <i class="icon-location3"></i>
                 <span>
                   ${place_name}
@@ -69,13 +91,11 @@ function drawAddressList(address, target){
 
 // 주소 목록중 하나 선택
 function chooseDestination(sectionEl){
-    $(sectionEl).on("click", "li", function(e){
-
-        input$El = $(`input#${$(e.target).data('target')}`);
-        $(input$El).val($(e.target).text().trim());
-//        $(e.target).addClass("active");
+    $(sectionEl).on("click", "li.nav-item", function(e){
+        $(this).addClass("active");
+        input$El = $(`input#${$(this).data('target')}`);
+        $(input$El).val($(this).text().trim());
         $("section#destination-list").text('');
-
 
     })
     // set el && form 
@@ -98,19 +118,10 @@ function getLocation(callback) {
 
 function load() {
   getLocation(initTmap);
-
-  $(".search-button").on("click", function(e){
-    let input$El = $(e.target).siblings("input");
-    let keyword = input$El.val();
-    if(keyword != ''){
-        searchAddress(keyword, input$El.attr("id"));
-    } else {
-        alert("검색어를 입력하세요");
-    }
-  })
+  setSearchbtn();
 
   chooseDestination("section#destination-list");
-
+  backDrop();
 }
 
 function locationErr(error, app) {

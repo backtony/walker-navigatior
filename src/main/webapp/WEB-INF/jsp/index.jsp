@@ -48,7 +48,7 @@
 		<div class="navbar-brand">
 			<a href="/" class="d-inline-block">
 
-				<img src="${pageContext.request.contextPath}/static/images/logo_white.png" alt="">
+				<img src="${pageContext.request.contextPath}/static/images/walker_navi.png" alt="">
 			</a>
 		</div>
 
@@ -170,43 +170,41 @@
 			<div class="sidebar-content">
 
 				<!-- Main navigation -->
-				<div class="card card-sidebar-mobile">
+        <div class="card card-sidebar-mobile">
 
 
 
-					<ul class="nav nav-sidebar" data-nav-type="accordion">
+          <ul class="nav nav-sidebar" data-nav-type="accordion">
 
-            <form action="/#" method="POST">
-                <li class="nav-item px-3 my-3 input-group">
-                  <input type="text" class="form-control" id="start" placeholder="출발지 검색">
-                  <button class="search-button btn btn-sm btn-outline-secondary" id="start-btn" type="button">검색</button>
-                </li>
 
-                <li class="nav-item px-3 input-group">
-                  <input type="text" class="form-control" id="end" placeholder="도착지 검색">
-                  <button class="search-button btn btn-sm btn-outline-secondary" type="button" id="end-btn">검색</button>
-                </li>
-            </form>
-              <!-- Main -->
-              <li class="nav-item-header">
-                <div class="text-uppercase font-size-xs line-height-xs">검색 목록</div>
-                <i class="icon-menu" title="Main"></i>
-              </li>
+            <li class="nav-item px-3 my-3 input-group">
+              <input type="text" class="form-control" id="start" placeholder="출발지 검색">
+              <button class="search-button btn btn-sm btn-outline-secondary" id="start-btn" type="button">검색</button>
+            </li>
 
-              <section id="destination-list" onclick="chooseDestination(this)">
-              </section>
+            <li class="nav-item px-3 input-group">
+              <input type="text" class="form-control" id="end" placeholder="도착지 검색">
+              <button class="search-button btn btn-sm btn-outline-secondary" type="button" id="end-btn">검색</button>
+            </li>
+            <div class="p-3">
+                <button type="button" class="btn bg-indigo btn-block">
+                    길찾기
+                </button>
+            </div>
 
-              
-              
-              <!-- /main -->
+            <!-- Main -->
+            <li class="nav-item-header">
+              <div class="text-uppercase font-size-xs line-height-xs">검색 목록</div>
+              <i class="icon-menu" title="Main"></i>
+            </li>
 
-						
-
-						
-
+            <section id="destination-list" onclick="chooseDestination(this)">
+            </section>    
+            <!-- /main -->
 					</ul>
 				</div>
 				<!-- /main navigation -->
+
 
 			</div>
 			<!-- /sidebar content -->
