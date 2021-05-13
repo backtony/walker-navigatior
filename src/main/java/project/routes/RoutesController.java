@@ -36,15 +36,10 @@ public class RoutesController {
     @ResponseBody
     @GetMapping("/path")
     public List<Candidate> path(
-                          @RequestParam String startX,
-                          @RequestParam String startY,
-                          @RequestParam String endX,
-                          @RequestParam String endY) {
+                          @RequestParam double startX,
+                          @RequestParam double startY,
+                          @RequestParam double endX,
+                          @RequestParam double endY) {
         return routeService.findCandidates(startX, startY, endX, endY);
-//        List<Candidate> cands = routeService.findCandidates(startX, startY, endX, endY);
-//        System.out.println(cands);
-//        ModelAndView mav = new ModelAndView("index");
-//        mav.addObject("res", cands);
-//        return mav;
     }
 }

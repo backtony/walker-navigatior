@@ -18,7 +18,7 @@ public class Candidate {
     }
 
     public Float getCost() {
-        return cost;
+        return 1.0f;
     }
 
     public void setCost(Float cost) {

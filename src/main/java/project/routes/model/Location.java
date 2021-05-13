@@ -1,22 +1,27 @@
 package project.routes.model;
 
 public class Location {
-    String x;
-    String y;
+    double x;
+    double y;
 
-    public String getX() {
+    public Location(double x, double y) {
+        this.x = x;
+        this.y = y;
+    }
+
+    public double getX() {
         return x;
     }
 
-    public void setX(String x) {
+    public void setX(double x) {
         this.x = x;
     }
 
-    public String getY() {
+    public double getY() {
         return y;
     }
 
-    public void setY(String y) {
+    public void setY(double y) {
         this.y = y;
     }
 
