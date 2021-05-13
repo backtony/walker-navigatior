@@ -1,11 +1,20 @@
+function generateGPSMarker(position, map) {
+  var tmapMarker = new Tmapv2.Marker({
+    position: new Tmapv2.LatLng(position.coords.latitude, position.coords.longitude),
+    map: map,
+  });
+  return tmapMarker;
+}
+
 function initTmap(position) {
-  var map = new Tmapv2.Map("map_div",
-    {
+  var map = new Tmapv2.Map("map_div", {
       center: new Tmapv2.LatLng(position.coords.latitude, position.coords.longitude), // 지도 초기 좌표
       width: "890px",
       height: "400px",
       zoom: 15
     });
+
+  var marker = generateGPSMarker(position, map);
 }
 
 function getLocation(callback) {
