@@ -1,4 +1,4 @@
-package com.example.jsontototototototo.vo;
+package project.vo;
 
 
 import lombok.AllArgsConstructor;
