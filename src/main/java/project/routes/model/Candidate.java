@@ -1,13 +1,60 @@
 package project.routes.model;
 
 import java.util.Arrays;
+import java.util.List;
+
+import project.routes.RouteService;
+import project.routes.model.feature.LineStringFeature;
+import project.routes.model.feature.PointFeature;
 
 public class Candidate {
     PedestrianApiResponse routes;
-    Float cost;
+    double cost;
     Accident[] accidents;
     Location[] cctvs;
     Location[] lamps;
+
+    public double euclidDistance(double x1,double y1, double x2, double y2){
+        return ((x1-x2)*(x1-x2))+((y1-y2)*(y1-y2));
+    }
+
+    public double calculateCost(){
+        // accidents와 ROUTES를 돌면서 최단 점을 찾고 그것을 COST에 합한다.
+        // ROUTES는 POINT OR LINE이냐를 판단하고 포인트면 하나 아니면, 둘이다.
+        // CANDIDATE 코스트만을 저장하면 될듯.
+        this.cost = 0;
+        for(int i = 0; i < accidents.length; i++){
+            double distance = 10000;
+            // Double.valueOf(s_num)
+            for(int j = 0; j < routes.features.length; j++){
+                if (routes.features[i] instanceof PointFeature) {
+                    PointFeature feature = (PointFeature) routes.features[i];
+                    double x = Double.valueOf(feature.getGeometry().getCoordinates()[0]);
+                    double y = Double.valueOf(feature.getGeometry().getCoordinates()[1]);
+                    double tmp = euclidDistance(accidents[i].getX(),accidents[i].getY(),x,y);
+                    if(tmp < distance){
+//                        loc.setX(x); loc.setY(y);
+                        distance = tmp;
+                    }
+                } else {
+                    LineStringFeature feature = (LineStringFeature) routes.features[i];
+                    for(int k = 0; k < 2; k++){
+                        double x = Double.valueOf(feature.getGeometry().getCoordinates()[k][0]);
+                        double y = Double.valueOf(feature.getGeometry().getCoordinates()[k][1]);
+                        double tmp = euclidDistance(accidents[i].getX(),accidents[i].getY(),x,y);
+                        if(tmp < distance){
+//                            loc.setX(x); loc.setY(y);
+                            distance = tmp;
+                        }
+                    }
+                }
+            }
+            double accidentCnt = (double)accidents[i].getAccidentCnt();
+            double deadCnt = (double)accidents[i].getDeadCnt();
+            this.cost += accidentCnt*(deadCnt+1)/distance;
+        }
+        return this.cost;
+    }
 
     public PedestrianApiResponse getRoutes() {
         return routes;
@@ -17,11 +64,11 @@ public class Candidate {
         this.routes = routes;
     }
 
-    public Float getCost() {
-        return cost;
+    public double getCost() {
+        return this.cost;
     }
 
-    public void setCost(Float cost) {
+    public void setCost(double cost) {
         this.cost = cost;
     }
 
