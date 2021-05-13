@@ -6,10 +6,6 @@ import org.slf4j.LoggerFactory;
 import lombok.extern.slf4j.Slf4j;
 import org.springframework.context.ApplicationContext;
 
-/**
- * Usage
- * String googleApiKey = PropertyUtil.getProperty("google.apiKey");
- **/
 @Slf4j
 public class PropertyUtil {
     public static String getProperty(String propertyName) {
