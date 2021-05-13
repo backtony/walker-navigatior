@@ -8,6 +8,25 @@
         FROM tbl_accident
     </select>
 
+    <select id="getAccidentsInRange" resultType="project.routes.model.Accident"><!-- selectUsers()메서드를 호출하면 실행할
+    SELECT문이며,
+						UserDTO 객체를 파라미터로 받아, UserDTO객체를 반환합니다.-->
+        SELECT *
+        FROM tbl_accident
+        WHERE <![CDATA[
+                x >= #{x1}
+            ]]>
+        AND <![CDATA[
+            x <= #{x2}
+        ]]>
+        AND <![CDATA[
+                y >= #{y1}
+        ]]>
+        AND <![CDATA[
+                y <= #{y2}
+        ]]>
+    </select>
+
     <select id="test" resultType="String">
         SELECT place_name
         FROM tbl_accident

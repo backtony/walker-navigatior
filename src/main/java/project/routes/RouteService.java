@@ -8,11 +8,9 @@ import org.springframework.stereotype.Service;
 import org.springframework.util.LinkedMultiValueMap;
 import org.springframework.util.MultiValueMap;
 import org.springframework.web.client.RestTemplate;
+import project.dao.AccidentDAO;
 import project.dao.LampDAO;
-import project.routes.model.Candidate;
-import project.routes.model.Location;
-import project.routes.model.PedestrianApiResponse;
-import project.routes.model.PointBox;
+import project.routes.model.*;
 
 import java.util.ArrayList;
 import java.util.Arrays;
@@ -24,6 +22,8 @@ public class RouteService {
     private RestTemplate restTemplate;
     @Autowired
     Environment env;
+    @Autowired
+    AccidentDAO accidentDAO;
 
     public PedestrianApiResponse getResponse(Double startX, Double startY, Double endX, Double endY, Double wayX,
                                              Double wayY) {
@@ -48,6 +48,12 @@ public class RouteService {
     public List<Candidate> findCandidates(double startX, double startY, double endX, double endY) {
         PointBox pb = new PointBox(startX, startY, endX, endY);
         List<Candidate> bestCandidates = Arrays.asList(new Candidate[5]);
+        List<Accident> accidents = accidentDAO.getAccidentsInRange(startX, startY, endX, endY);
+        Accident[] accidentArr = new Accident[accidents.size()];
+        for (int i=0; i<accidents.size(); i++) {
+            accidentArr[i] = accidents.get(i);
+        }
+        System.out.println(accidents);
         Candidate noWayCand = new Candidate();
         noWayCand.setRoutes(getResponse(startX, startY, endX, endY, null, null));
         bestCandidates.set(0, noWayCand);
@@ -55,9 +61,13 @@ public class RouteService {
             int res = pb.findSector(lamp.getX(), lamp.getY());
             if (res == 0) continue;
             Candidate cand = new Candidate();
+            cand.setAccidents(accidentArr);
             cand.setRoutes(getResponse(startX, startY, endX, endY, lamp.getX(), lamp.getY()));
-            float cost = cand.getCost();
-            if (bestCandidates.get(res) == null || cost > bestCandidates.get(res).getCost()) {
+            cand.calculateCost();
+            double cost = cand.getCost();
+            System.out.println("x: "+lamp.getX());
+            System.out.println(cost);
+            if (bestCandidates.get(res) == null || cost < bestCandidates.get(res).getCost()) {
                 bestCandidates.set(res, cand);
             }
         }
