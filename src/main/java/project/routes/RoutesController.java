@@ -14,6 +14,7 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.client.RestTemplate;
+import project.routes.model.PedestrianApiResponse;
 
 @Controller
 @RequestMapping("/routes")
@@ -48,7 +49,7 @@ public class RoutesController {
             map.add("startName", "start");
             map.add("endName", "end");
             HttpEntity<MultiValueMap> entity = new HttpEntity<>(map, headers);
-            Object res = restTemplate.postForObject(url,entity , Object.class);
+            PedestrianApiResponse res = restTemplate.postForObject(url,entity , PedestrianApiResponse.class);
             System.out.println(res);
             model.addAttribute("res", res);
         } catch (Exception e) {
