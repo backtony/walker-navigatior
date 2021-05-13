@@ -12,10 +12,11 @@ function initTmap(position) {
     console.log(`current: ${lat}, ${lng}`);
 
     // get current location name as start point
-
+    
     // 
 }
 
+// search btn event
 function setSearchbtn(){
   $(".search-button").on("click", function(e){
     let input$El = $(e.target).siblings("input");
@@ -28,6 +29,7 @@ function setSearchbtn(){
   })
 }
 
+// sidebar backdrop event
 function backDrop(){
     $(".content-wrapper").on("click", function(e){
         if ($('body').hasClass('sidebar-mobile-main')) {
@@ -38,7 +40,7 @@ function backDrop(){
         }
     })
 }
-// keyword 통한 검색 -> response 로 목록 받아옴
+// keyword 통한 목록 검색
 function searchAddress(keyword, target){
     $.ajax({
         url: `/TMap/keyword?keyword=${keyword}`,
@@ -89,7 +91,7 @@ function drawAddressList(address, target){
     }
 }
 
-// 주소 목록중 하나 선택
+// 주소 목록 중 하나 선택
 function chooseDestination(sectionEl){
     $(sectionEl).on("click", "li.nav-item", function(e){
         $(this).addClass("active");
@@ -98,14 +100,9 @@ function chooseDestination(sectionEl){
         $("section#destination-list").text('');
 
     })
-    // set el && form 
-
+ 
 }
 
-// 길찾기 요청
-function requestNavigation(form){
-
-}
 
 
 function getLocation(callback) {
