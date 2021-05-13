@@ -48,6 +48,28 @@
 4. 네비게이션 동작
 
 </br></br>
+
+## 경로추천 알고리즘
+* ![equation](https://chart.apis.google.com/chart?cht=tx&chl=(%5Ctext%7Bdanger%20rate%7D)%20%3D%20%5Cfrac%7B%5Ctext%7B%5C%23accident%7D%20%5Ctimes%20(%5Ctext%7B%5C%23death%7D%20%2B%201)%7D%7Bmin_%7B%5Cforall%20point%7D(distance)%7D)
+
+```
+findRoute(start, end):
+  safe_routes = []
+  sectors = seperate_sector(start, end)
+  
+  for sector in sectors:
+    for (cctv, lamp) in random(all cctv, lamp):
+      sub_route = Tmap.getRoute(start, (cctv, lamp), end)
+      danger_rate = ( accident * (death + 1) ) / min (distance)
+      
+    route = accumulate(sub_route)
+    
+    if danger_rate < threshold:
+        safe_routes.append(route)
+        
+  return safe_routes
+```
+
 # 👀실행 화면
 ## 웹 화면
 ![image](/libs/operation_web.PNG)
