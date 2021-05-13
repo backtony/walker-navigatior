@@ -1,0 +1,22 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+<mapper namespace="project.dao.LampDAO"><!--namespace를 통해 UserDAO와 연결합니다. -->
+
+    <select id="getLampsInRange" resultType="project.routes.model.Location">
+        SELECT *
+        FROM tbl_lamp
+        WHERE <![CDATA[
+                x >= #{x1}
+            ]]>
+        AND <![CDATA[
+            x <= #{x2}
+        ]]>
+        AND <![CDATA[
+                y >= #{y1}
+        ]]>
+        AND <![CDATA[
+                y <= #{y2}
+        ]]>
+    </select>
+
+</mapper>
