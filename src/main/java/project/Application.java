@@ -27,7 +27,7 @@ public class Application extends SpringBootServletInitializer {
         SqlSessionFactoryBean sessionFactory = new SqlSessionFactoryBean();
         sessionFactory.setDataSource(dataSource);
 
-        Resource[] res = new PathMatchingResourcePatternResolver().getResources("classpath:mapper/*Mapper.xml");
+        Resource[] res = new PathMatchingResourcePatternResolver().getResources("classpath:**/**.xml");
         sessionFactory.setMapperLocations(res);
 
         return sessionFactory.getObject();

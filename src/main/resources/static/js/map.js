@@ -178,6 +178,7 @@ function load() {
 
 function drawRoute(routes) {
   var resultData = routes.features;
+  /*
   if (resultdrawArr.length > 0) {
     for ( var i in resultdrawArr) {
       resultdrawArr[i]
@@ -185,6 +186,7 @@ function drawRoute(routes) {
     }
     resultdrawArr = [];
   }
+  */
 
   drawInfoArr = [];
 
@@ -194,7 +196,7 @@ function drawRoute(routes) {
 
     if (geometry.type == "LineString") {
       for ( var j in geometry.coordinates) {
-        var convertChange = new Tmapv2.LatLng(geometry.coordinates[j][0], geometry.coordinates[j][1]);
+        var convertChange = new Tmapv2.LatLng(geometry.coordinates[j][1], geometry.coordinates[j][0]);
         drawInfoArr.push(convertChange);
       }
     } else {
@@ -217,7 +219,7 @@ function drawRoute(routes) {
       }
       marker_p = new Tmapv2.Marker(
         {
-          position : new Tmapv2.LatLng(geometry.coordinates[0], geometry.coordinates[1]),
+          position : new Tmapv2.LatLng(geometry.coordinates[1], geometry.coordinates[0]),
           icon : markerImg,
           iconSize : size,
           map : map
