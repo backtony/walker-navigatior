@@ -9,12 +9,13 @@ import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.util.LinkedMultiValueMap;
 import org.springframework.util.MultiValueMap;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.client.RestTemplate;
+import org.springframework.web.servlet.ModelAndView;
+import project.routes.model.Candidate;
 import project.routes.model.PedestrianApiResponse;
+
+import java.util.List;
 
 @Controller
 @RequestMapping("/routes")
@@ -24,37 +25,26 @@ public class RoutesController {
     @Autowired
     Environment env;
 
+    @Autowired
+    RouteService routeService;
+
     @ModelAttribute("appKey")
     String appKey() {
         return env.getProperty("app.key");
     }
 
-    @GetMapping("/")
-    public String path(Model model,
-                       @RequestParam String startX,
-                       @RequestParam String startY,
-                       @RequestParam String endX,
-                       @RequestParam String endY) {
-        try {
-            RestTemplate restTemplate = new RestTemplate();
-            HttpHeaders headers = new HttpHeaders();
-            headers.set("appKey", env.getProperty("app.key"));
-
-            String url = "https://apis.openapi.sk.com/tmap/routes/pedestrian";
-            MultiValueMap<String, String> map= new LinkedMultiValueMap<>();
-            map.add("startY", startY);
-            map.add("startX", startX);
-            map.add("endY", endY);
-            map.add("endX", endX);
-            map.add("startName", "start");
-            map.add("endName", "end");
-            HttpEntity<MultiValueMap> entity = new HttpEntity<>(map, headers);
-            PedestrianApiResponse res = restTemplate.postForObject(url,entity , PedestrianApiResponse.class);
-            System.out.println(res);
-            model.addAttribute("res", res);
-        } catch (Exception e) {
-            System.out.println(e);
-        }
-        return "index";
+    @ResponseBody
+    @GetMapping("/path")
+    public List<Candidate> path(
+                          @RequestParam String startX,
+                          @RequestParam String startY,
+                          @RequestParam String endX,
+                          @RequestParam String endY) {
+        return routeService.findCandidates(startX, startY, endX, endY);
+//        List<Candidate> cands = routeService.findCandidates(startX, startY, endX, endY);
+//        System.out.println(cands);
+//        ModelAndView mav = new ModelAndView("index");
+//        mav.addObject("res", cands);
+//        return mav;
     }
 }

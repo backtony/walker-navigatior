@@ -19,4 +19,12 @@ public class Location {
     public void setY(String y) {
         this.y = y;
     }
+
+    @Override
+    public String toString() {
+        return "Location{" +
+                "x='" + x + '\'' +
+                ", y='" + y + '\'' +
+                '}';
+    }
 }

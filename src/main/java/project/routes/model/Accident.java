@@ -28,4 +28,13 @@ public class Accident {
     public void setNumber(Integer number) {
         this.number = number;
     }
+
+    @Override
+    public String toString() {
+        return "Accident{" +
+                "x='" + x + '\'' +
+                ", y='" + y + '\'' +
+                ", number=" + number +
+                '}';
+    }
 }

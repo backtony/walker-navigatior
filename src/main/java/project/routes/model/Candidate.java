@@ -1,5 +1,7 @@
 package project.routes.model;
 
+import java.util.Arrays;
+
 public class Candidate {
     PedestrianApiResponse routes;
     Float cost;
@@ -45,5 +47,16 @@ public class Candidate {
 
     public void setLamps(Location[] lamps) {
         this.lamps = lamps;
+    }
+
+    @Override
+    public String toString() {
+        return "Candidate{" +
+                "routes=" + routes +
+                ", cost=" + cost +
+                ", accidents=" + Arrays.toString(accidents) +
+                ", cctvs=" + Arrays.toString(cctvs) +
+                ", lamps=" + Arrays.toString(lamps) +
+                '}';
     }
 }
