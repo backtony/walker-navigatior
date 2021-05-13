@@ -53,7 +53,6 @@ public class RouteService {
         for (int i=0; i<accidents.size(); i++) {
             accidentArr[i] = accidents.get(i);
         }
-        System.out.println(accidents);
         Candidate noWayCand = new Candidate();
         noWayCand.setRoutes(getResponse(startX, startY, endX, endY, null, null));
         bestCandidates.set(0, noWayCand);
@@ -65,8 +64,6 @@ public class RouteService {
             cand.setRoutes(getResponse(startX, startY, endX, endY, lamp.getX(), lamp.getY()));
             cand.calculateCost();
             double cost = cand.getCost();
-            System.out.println("x: "+lamp.getX());
-            System.out.println(cost);
             if (bestCandidates.get(res) == null || cost < bestCandidates.get(res).getCost()) {
                 bestCandidates.set(res, cand);
             }

@@ -8,7 +8,7 @@
         FROM tbl_accident
     </select>
 
-    <select id="getAccidentsInRange" resultType="project.routes.model.Accident"><!-- selectUsers()메서드를 호출하면 실행할
+    <select id="getAccidentsInRange" resultMap="accident"><!-- selectUsers()메서드를 호출하면 실행할
     SELECT문이며,
 						UserDTO 객체를 파라미터로 받아, UserDTO객체를 반환합니다.-->
         SELECT *
@@ -33,4 +33,15 @@
         WHERE id = 1
 
     </select>
+
+    <resultMap id="accident" type="project.routes.model.Accident">
+        <result property="id" column="id"/>
+        <result property="placeName" column="place_name"/>
+        <result property="addressName" column="address_name"/>
+        <result property="roadAddressName" column="road_address_name"/>
+        <result property="x" column="x"/>
+        <result property="y" column="y"/>
+        <result property="accidentCnt" column="accident_cnt"/>
+        <result property="deadCnt" column="dead_cnt"/>
+    </resultMap>
 </mapper>
