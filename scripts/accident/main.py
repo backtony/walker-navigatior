@@ -38,11 +38,9 @@ def getFiles(targetdir):
     return files
 
 if __name__ == "__main__":
-
-
     try:
         files = getFiles("./csv/")
-        mysql_con = mysql.connector.connect(host='localhost', port='3306', database='walker_db', user='master', password='qwe123')
+        mysql_con = mysql.connector.connect(host='localhost', port='3306', database='walker_db', user='', password='')
         mysql_cursor = mysql_con.cursor(dictionary=True)
         sql = """insert into tbl_accident(place_name,address_name,road_address_name,x,y,accident_cnt,dead_cnt,year)
                  values (%s, %s, %s, %s, %s, %s, %s, %s)"""
